@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+    <head>
+        <script type="text/javascript" src="shjs_main.js"></script>
+        <script type="text/javascript" src="extshjs_main.js"></script>
+        <script type="text/javascript" src="lang/shjs_html.js"></script>
+        <script type="text/javascript" src="lang/shjs_php.js"></script>
+        <link type="text/css" rel="stylesheet" href="css/sh_bipolar.css" />
+    </head>
+    <body onload="ExtSHJS.highlightDocument();">
+        <pre class="sh_html" id="preSomeCode">&lt;html&gt;
+        &lt;head&gt;&lt;/head&gt;
+        &lt;body&gt;
+            <span id="somePhp" class="sh_php">&lt;?php
+                    echo &lt;&lt;&lt;HERE_DOC
+<span id="moreHtml" class="sh_html">&lt;h1&gt;Hello World&lt;/h1&gt;
+&lt;p&gt;Some paragraph text&lt;/p&gt;</span>
+HERE_DOC;
+            ?&gt;</span>
+            <span id="evenMorePhp" class="sh_php">&lt;?php echo "<span id="evenMoreHtml" class="sh_html">&lt;div&gt;and some more html&lt;/div&gt;</span>" ; ?&gt;</span>
+        &lt;/body&gt;
+&lt;/html&gt;</pre>
+    </body>
+</html>
