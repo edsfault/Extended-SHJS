@@ -5,10 +5,12 @@ License: http://shjs.sourceforge.net/doc/gplv3.html
 */
 
 var SHJS = SHJS || { } ;
-
 SHJS.languages = SHJS.languages || { } ;
-
 SHJS.requests = { } ;
+
+SHJS.SYNTAX_PREFIX = 'shjs_' ;
+SHJS.ClassicBehavior = false ;
+SHJS.ExtendedBehavior = true ;
 
 SHJS.isEmailAddress = function ( url )
 {
@@ -349,13 +351,17 @@ SHJS.addClass = function (element, name)
 Extracts the tags from an HTML DOM NodeList.
 @param  nodeList  a DOM NodeList
 @param  result  an object with text, tags and pos properties
+@param isExtendedBehavior optional parameter to set extended behavior (extended shjs)
 */
-SHJS.extractTagsFromNodeList = function ( nodeList , result )
+SHJS.extractTagsFromNodeList = function ( nodeList , result , isExtendedBehavior )
 {
+    isExtendedBehavior = ( isExtendedBehavior != null ) && isExtendedBehavior ;
+
     var length = nodeList.length;
     var brElement = document.createElement( 'br' ) ;
     
     var terminator ;
+    var isSyntaxElement = false ;
     if (/MSIE/.test(navigator.userAgent))
     {
         terminator = '\r';
@@ -375,16 +381,34 @@ SHJS.extractTagsFromNodeList = function ( nodeList , result )
         switch (node.nodeType)
         {
             case 1:
-                if ( ( node.className ) && ( node.className.substr( 0 , 3 ) == 'sh_' ) )
+
+                isSyntaxElement = ( node.className && ( node.className.substr( 0 , 3 ) == 'sh_' ) ) ;
+                if ( isExtendedBehavior )
                 {
-                    result.tags.push({node: node.cloneNode(true), pos: result.pos});
+                    if ( isSyntaxElement )
+                    {
+                        result.tags.push({node: node.cloneNode(true), pos: result.pos});
+                    }
+                    else
+                    {
+                        result.tags.push({node: node.cloneNode(false), pos: result.pos});
+                        SHJS.extractTagsFromNodeList(node.childNodes, result , isExtendedBehavior );
+                    }
+                    result.tags.push({pos: result.pos});
                 }
                 else
                 {
-                    result.tags.push({node: node.cloneNode(false), pos: result.pos});
-                    SHJS.extractTagsFromNodeList(node.childNodes, result);
+                    if ( isSyntaxElement )
+                    {
+                        SHJS.extractTagsFromNodeList(node.childNodes, result, isExtendedBehavior);
+                    }
+                    else
+                    {
+                        result.tags.push({node: node.cloneNode(false), pos: result.pos});
+                        SHJS.extractTagsFromNodeList(node.childNodes, result, isExtendedBehavior);
+                        result.tags.push({pos: result.pos});
+                    }
                 }
-                result.tags.push({pos: result.pos});
             break;
             case 3:
             case 4:
@@ -399,7 +423,6 @@ SHJS.extractTagsFromNodeList = function ( nodeList , result )
                     {
                         if ( textLines[j] != "" )
                         {
-                            //alert ( "Begin " + textLines[j][textLines[j].length-1] + " End" ) ;
                             result.text.push( textLines[j] ) ;
                             result.pos += textLines[j].length ;
 
@@ -432,16 +455,18 @@ returned as an array of tag objects. See SHJS.highlightString for the format of
 the tag objects.
 @param  element  a DOM element
 @param  tags  an empty array; the extracted tag objects will be returned in it
+@param isExtendedBehavior optional parameter to set extended behavior (extended shjs)
 @return  the text of the element
 @see  SHJS.highlightString
 */
-SHJS.extractTags = function ( element , tags )
+SHJS.extractTags = function ( element , tags, isExtendedBehavior )
 {
+    isExtendedBehavior = ( isExtendedBehavior != null ) && isExtendedBehavior ;
     var result = {};
     result.text = [];
     result.tags = tags;
     result.pos = 0;
-    SHJS.extractTagsFromNodeList(element.childNodes, result);
+    SHJS.extractTagsFromNodeList(element.childNodes, result , isExtendedBehavior );
     return result.text.join('');
 }
 
@@ -579,12 +604,14 @@ Highlights an element containing source code.  Upon completion of this function,
 the element will have been placed in the "SHJS.sourceCode" class.
 @param  element  a DOM <pre> element containing the source code to be highlighted
 @param  language  a language definition object
+@param isExtendedBehavior optional parameter to set extended behavior (extended shjs)
 */
-SHJS.highlightElement = function ( element , language )
+SHJS.highlightElement = function ( element , language , isExtendedBehavior )
 {
+    isExtendedBehavior = ( isExtendedBehavior != null ) && isExtendedBehavior ;
     SHJS.addClass(element, 'sh_sourceCode');
     var originalTags = [];
-    var inputString = SHJS.extractTags(element, originalTags);
+    var inputString = SHJS.extractTags(element, originalTags , isExtendedBehavior);
     var highlightTags = SHJS.highlightString(inputString, language);
     var tags = SHJS.mergeTags(originalTags, highlightTags);
     var documentFragment = SHJS.insertTags(tags, inputString);
@@ -654,16 +681,35 @@ SHJS.load = function ( language , element , prefix , suffix )
     request.send(null);
 }
 
-
-
 /**
 Highlights all elements containing source code on the current page. Elements
 containing source code must be "pre" elements with a "class" attribute of
 "SHJS.LANGUAGE", where LANGUAGE is a valid language identifier; e.g., "SHJS.java"
 identifies the element as containing "java" language source code.
 */
-SHJS.highlightDocument = function ( prefix , suffix )
+SHJS.highlightDocument = function ( prefix , suffix , isExtendedBehavior )
 {
+    if ( isExtendedBehavior == null )
+    {
+        if ( ( suffix === true ) || ( suffix === false ) )
+        {
+            alert ( "extended found in suffix" ) ;
+            isExtendedBehavior = suffix ;
+            suffix = null ;
+        }
+        else if ( ( prefix === true ) || ( prefix === false ) )
+        {
+            alert ( "extended found in prefix" ) ;
+            isExtendedBehavior = prefix ;
+            prefix = null ;
+        }
+        else
+        {
+            alert ( "extended not found" ) ;
+            isExtendedBehavior = false ;
+        }
+    }
+
     var nodeList = document.getElementsByTagName('pre');
     for (var i = 0; i < nodeList.length; i++)
     {
@@ -681,7 +727,7 @@ SHJS.highlightDocument = function ( prefix , suffix )
                 var language = htmlClass.substring(3);
                 if (language in SHJS.languages)
                 {
-                    SHJS.highlightElement(element, SHJS.languages[language]);
+                    SHJS.highlightElement(element, SHJS.languages[language] , isExtendedBehavior );
                 }
                 else if (typeof(prefix) === 'string' && typeof(suffix) === 'string')
                 {

@@ -1,9 +1,20 @@
 var ExtSHJS = ExtSHJS || { } ;
 
-ExtSHJS.getHighlightedDocumentFragment = function ( element , language )
+SHJS.SYNTAX_PREFIX = 'extshjs_' ;
+ExtSHJS.SYNTAX_PREFIX = 'extshjs';
+
+SHJS.ClassicBehavior = false ;
+SHJS.ExtendedBehavior = false ;
+
+ExtSHJS.ClassicBehavior = false ;
+ExtSHJS.ExtendedBehavior = true ;
+
+ExtSHJS.getHighlightedDocumentFragment = function ( element , language , isExtendedBehavior )
 {
+    isExtendedBehavior = ( isExtendedBehavior == null ) || isExtendedBehavior ;
+
     var originalTags = [];
-    var inputString = SHJS.extractTags(element, originalTags);
+    var inputString = SHJS.extractTags(element, originalTags , isExtendedBehavior);
     var highlightTags = SHJS.highlightString(inputString, language);
     var tags = SHJS.mergeTags(originalTags, highlightTags);
     var documentFragment = SHJS.insertTags(tags, inputString);
@@ -56,11 +67,13 @@ ExtSHJS.highlightSubElement = function ( element , language )
     parent.replaceChild( highlightedDocumentFragment , element) ;
 } ;
 
-ExtSHJS.highlightParentElement = function ( element , language )
+ExtSHJS.highlightElement = function ( element , language , isExtendedBehavior )
 {
+    isExtendedBehavior = ( isExtendedBehavior == null ) || isExtendedBehavior ;
+
     SHJS.addClass(element, 'sh_sourceCode') ;
 
-    var highlightedDocumentFragment = ExtSHJS.getHighlightedDocumentFragment( element , language ) ;
+    var highlightedDocumentFragment = ExtSHJS.getHighlightedDocumentFragment( element , language , isExtendedBehavior ) ;
     var subElements = ExtSHJS.getSyntaxElementsFrom( highlightedDocumentFragment ) ;
     
     element.innerHTML = '' ;
@@ -164,8 +177,10 @@ ExtSHJS.syntaxSheet = function ( paramPreElement )
     paramPreElement.parentNode.replaceChild ( tblSyntaxSheet , paramPreElement ) ;
 } ;
 
-ExtSHJS.highlightDocument = function ( )
+ExtSHJS.highlightDocument = function ( isExtendedBehavior )
 {
+    isExtendedBehavior = ( isExtendedBehavior == null ) || isExtendedBehavior ;
+
     var preElements = [] ;
 
     var currentElement = null ;
@@ -183,7 +198,8 @@ ExtSHJS.highlightDocument = function ( )
         if ( currentCssClass.substr( 0 , 3 ) == 'sh_' )
         {
             currentLanguage = currentCssClass.substring( 3 ) ;
-            ExtSHJS.highlightParentElement( preElements[currentElement] , SHJS.languages[currentLanguage] ) ;
+            ExtSHJS.highlightElement( preElements[currentElement] , SHJS.languages[currentLanguage] , isExtendedBehavior ) ;
+            //SHJS.highlightElement( preElements[currentElement] , SHJS.languages[currentLanguage] ) ;
             ExtSHJS.syntaxSheet( preElements[currentElement] ) ;
         }
     }

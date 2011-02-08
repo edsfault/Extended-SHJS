@@ -13,10 +13,13 @@ pre.sh_sourceCode {
   padding : 0 ;
   margin : 0 ;
   border : 0 ;
+
+  font-size: inherit ;
 }
 
 tr td.extshjs_sourceCode {
   background-color: #000000;
+  font-size: inherit ;
 }
 
 tr.extshjs_alternateLine td.extshjs_sourceCode, tr.extshjs_alternateLine td.extshjs_lineNumber {
@@ -31,7 +34,7 @@ pre.extshjs_alternateLine {
 tr td.extshjs_lineNumber {
    background-color: #000000;
    color: #ffffff ;
-
+   text-align: right ;
    border-right: 2px #00ffff solid ;
 }
 
