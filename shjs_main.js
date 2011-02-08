@@ -73,6 +73,7 @@ DOM element started by the tag. End tags do not have this property.
 */
 SHJS.highlightString = function ( inputString , language )
 {
+
     if ( /Konqueror/.test( navigator.userAgent ) )
     {
         if ( ! language.konquered )
@@ -135,7 +136,7 @@ SHJS.highlightString = function ( inputString , language )
             if (currentStyle)
             {
                 tags[numTags++] = {pos: pos};
-                if (currentStyle === 'sh_url')
+                if (currentStyle === SHJS.SYNTAX_PREFIX + 'url')
                 {
                     SHJS.setHref(tags, numTags, inputString);
                 }
@@ -144,7 +145,7 @@ SHJS.highlightString = function ( inputString , language )
             if (style)
             {
                 var clone;
-                if (style === 'sh_url')
+                if (style === SHJS.SYNTAX_PREFIX + 'url')
                 {
                     clone = a.cloneNode(false);
                 }
@@ -298,7 +299,7 @@ SHJS.highlightString = function ( inputString , language )
         if (currentStyle)
         {
             tags[numTags++] = {pos: pos};
-            if (currentStyle === 'sh_url')
+            if (currentStyle === SHJS.SYNTAX_PREFIX + 'url')
             {
                 SHJS.setHref(tags, numTags, inputString);
             }
@@ -382,7 +383,7 @@ SHJS.extractTagsFromNodeList = function ( nodeList , result , isExtendedBehavior
         {
             case 1:
 
-                isSyntaxElement = ( node.className && ( node.className.substr( 0 , 3 ) == 'sh_' ) ) ;
+                isSyntaxElement = ( node.className && ( node.className.substr( 0 , SHJS.SYNTAX_PREFIX.length ) == SHJS.SYNTAX_PREFIX ) ) ;
                 if ( isExtendedBehavior )
                 {
                     if ( isSyntaxElement )
@@ -609,7 +610,7 @@ the element will have been placed in the "SHJS.sourceCode" class.
 SHJS.highlightElement = function ( element , language , isExtendedBehavior )
 {
     isExtendedBehavior = ( isExtendedBehavior != null ) && isExtendedBehavior ;
-    SHJS.addClass(element, 'sh_sourceCode');
+    SHJS.addClass(element, SHJS.SYNTAX_PREFIX + 'sourceCode');
     var originalTags = [];
     var inputString = SHJS.extractTags(element, originalTags , isExtendedBehavior);
     var highlightTags = SHJS.highlightString(inputString, language);
@@ -650,7 +651,7 @@ SHJS.load = function ( language , element , prefix , suffix )
     }
     SHJS.requests[language] = [element];
     var request = SHJS.getXMLHttpRequest();
-    var url = prefix + 'sh_' + language + suffix;
+    var url = prefix + SHJS.SYNTAX_PREFIX + '' + language + suffix;
     request.open('GET', url, true);
     request.onreadystatechange = function ()
     {
@@ -718,13 +719,13 @@ SHJS.highlightDocument = function ( prefix , suffix , isExtendedBehavior )
         for (var j = 0; j < htmlClasses.length; j++)
         {
             var htmlClass = htmlClasses[j].toLowerCase();
-            if (htmlClass === 'sh_sourcecode')
+            if (htmlClass === SHJS.SYNTAX_PREFIX + 'sourcecode')
             {
                 continue;
             }
-            if (htmlClass.substr(0, 3) === 'sh_')
+            if (htmlClass.substr(0, SHJS.SYNTAX_PREFIX.length ) === SHJS.SYNTAX_PREFIX )
             {
-                var language = htmlClass.substring(3);
+                var language = htmlClass.substring(SHJS.SYNTAX_PREFIX.length);
                 if (language in SHJS.languages)
                 {
                     SHJS.highlightElement(element, SHJS.languages[language] , isExtendedBehavior );

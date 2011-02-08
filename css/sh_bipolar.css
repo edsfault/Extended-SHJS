@@ -5,7 +5,7 @@ table.extshjs_sourceCode
     font-size: 16px ;
 }
 
-pre.sh_sourceCode {
+pre.shjs_sourceCode , pre.extshjs_sourceCode {
   background-color: #000000;
   color: #d149a6;
   white-space: pre ;
@@ -38,145 +38,145 @@ tr td.extshjs_lineNumber {
    border-right: 2px #00ffff solid ;
 }
 
-pre.sh_sourceCode .sh_keyword {
+pre.shjs_sourceCode .shjs_keyword , pre.extshjs_sourceCode .extshjs_keyword {
   color: #ee85e2;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_type {
+pre.shjs_sourceCode .shjs_type , pre.extshjs_sourceCode .extshjs_type {
   color: #aadd8b;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_string {
+pre.shjs_sourceCode .shjs_string , pre.extshjs_sourceCode .extshjs_string {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_regexp {
+pre.shjs_sourceCode .shjs_regexp , pre.extshjs_sourceCode .extshjs_regexp {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_specialchar {
+pre.shjs_sourceCode .shjs_specialchar , pre.extshjs_sourceCode .extshjs_regexp {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_comment {
+pre.shjs_sourceCode .shjs_comment , pre.extshjs_sourceCode .extshjs_comment {
   color: #35d6e5;
   font-weight: normal;
   font-style: italic;
 }
 
-pre.sh_sourceCode .sh_number {
+pre.shjs_sourceCode .shjs_number , pre.extshjs_sourceCode .extshjs_number {
   color: #ffffff;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_preproc {
+pre.shjs_sourceCode .shjs_preproc , pre.extshjs_sourceCode .extshjs_number {
   color: #07f6bf;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_symbol {
+pre.shjs_sourceCode .shjs_symbol , pre.extshjs_sourceCode .extshjs_symbol {
   color: #348fef;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_function {
+pre.shjs_sourceCode .shjs_function , pre.extshjs_sourceCode .extshjs_function {
   color: #d51993;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_cbracket {
+pre.shjs_sourceCode .shjs_cbracket , pre.extshjs_sourceCode .extshjs_cbracket {
   color: #348fef;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_url {
+pre.shjs_sourceCode .shjs_url , pre.extshjs_sourceCode .extshjs_url {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_date {
+pre.shjs_sourceCode .shjs_date , pre.extshjs_sourceCode .extshjs_date {
   color: #ee85e2;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_time {
+pre.shjs_sourceCode .shjs_time , pre.extshjs_sourceCode .extshjs_time {
   color: #ee85e2;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_file {
+pre.shjs_sourceCode .shjs_file , pre.extshjs_sourceCode .extshjs_file {
   color: #ee85e2;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_ip {
+pre.shjs_sourceCode .shjs_ip , pre.extshjs_sourceCode .extshjs_ip {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_name {
+pre.shjs_sourceCode .shjs_name , pre.extshjs_sourceCode .extshjs_name {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_variable {
+pre.shjs_sourceCode .shjs_variable , pre.extshjs_sourceCode .extshjs_variable {
   color: #72d42c;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_oldfile {
+pre.shjs_sourceCode .shjs_oldfile , pre.extshjs_sourceCode .extshjs_oldfile {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_newfile {
+pre.shjs_sourceCode .shjs_newfile , pre.extshjs_sourceCode .extshjs_newfile {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_difflines {
+pre.shjs_sourceCode .shjs_difflines , pre.extshjs_sourceCode .extshjs_difflines {
   color: #ee85e2;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_selector {
+pre.shjs_sourceCode .shjs_selector , pre.extshjs_sourceCode .extshjs_selector {
   color: #72d42c;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_property {
+pre.shjs_sourceCode .shjs_property , pre.extshjs_sourceCode .extshjs_property {
   color: #ee85e2;
   font-weight: bold;
   font-style: normal;
 }
 
-pre.sh_sourceCode .sh_value {
+pre.shjs_sourceCode .shjs_value , pre.extshjs_sourceCode .extshjs_value {
   color: #9ef457;
   font-weight: normal;
   font-style: normal;

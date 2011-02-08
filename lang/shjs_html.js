@@ -5,45 +5,45 @@ SHJS.languages['html'] = [
   [
     [
       /<\?xml/g,
-      'sh_preproc',
+      SHJS.SYNTAX_PREFIX + 'preproc',
       1,
       1
     ],
     [
       /<!DOCTYPE/g,
-      'sh_preproc',
+      SHJS.SYNTAX_PREFIX + 'preproc',
       3,
       1
     ],
     [
       /<!--/g,
-      'sh_comment',
+      SHJS.SYNTAX_PREFIX + 'comment',
       4
     ],
     [
       /<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)(?:\/)?>/g,
-      'sh_keyword',
+      SHJS.SYNTAX_PREFIX + 'keyword',
       -1
     ],
     [
       /<(?:\/)?[A-Za-z](?:[A-Za-z0-9_:.-]*)/g,
-      'sh_keyword',
+      SHJS.SYNTAX_PREFIX + 'keyword',
       5,
       1
     ],
     [
       /&(?:[A-Za-z0-9]+);/g,
-      'sh_preproc',
+      SHJS.SYNTAX_PREFIX + 'preproc',
       -1
     ],
     [
       /<(?:\/)?[A-Za-z][A-Za-z0-9]*(?:\/)?>/g,
-      'sh_keyword',
+      SHJS.SYNTAX_PREFIX + 'keyword',
       -1
     ],
     [
       /<(?:\/)?[A-Za-z][A-Za-z0-9]*/g,
-      'sh_keyword',
+      SHJS.SYNTAX_PREFIX + 'keyword',
       5,
       1
     ]
@@ -51,17 +51,17 @@ SHJS.languages['html'] = [
   [
     [
       /\?>/g,
-      'sh_preproc',
+      SHJS.SYNTAX_PREFIX + 'preproc',
       -2
     ],
     [
       /([^=" \t>]+)([ \t]*)(=?)/g,
-      ['sh_type', 'sh_normal', 'sh_symbol'],
+      [SHJS.SYNTAX_PREFIX + 'type', SHJS.SYNTAX_PREFIX + 'normal', SHJS.SYNTAX_PREFIX + 'symbol'],
       -1
     ],
     [
       /"/g,
-      'sh_string',
+      SHJS.SYNTAX_PREFIX + 'string',
       2
     ]
   ],
@@ -73,53 +73,53 @@ SHJS.languages['html'] = [
     ],
     [
       /"/g,
-      'sh_string',
+      SHJS.SYNTAX_PREFIX + 'string',
       -2
     ]
   ],
   [
     [
       />/g,
-      'sh_preproc',
+      SHJS.SYNTAX_PREFIX + 'preproc',
       -2
     ],
     [
       /([^=" \t>]+)([ \t]*)(=?)/g,
-      ['sh_type', 'sh_normal', 'sh_symbol'],
+      [SHJS.SYNTAX_PREFIX + 'type', SHJS.SYNTAX_PREFIX + 'normal', SHJS.SYNTAX_PREFIX + 'symbol'],
       -1
     ],
     [
       /"/g,
-      'sh_string',
+      SHJS.SYNTAX_PREFIX + 'string',
       2
     ]
   ],
   [
     [
       /-->/g,
-      'sh_comment',
+      SHJS.SYNTAX_PREFIX + 'comment',
       -2
     ],
     [
       /<!--/g,
-      'sh_comment',
+      SHJS.SYNTAX_PREFIX + 'comment',
       4
     ]
   ],
   [
     [
       /(?:\/)?>/g,
-      'sh_keyword',
+      SHJS.SYNTAX_PREFIX + 'keyword',
       -2
     ],
     [
       /([^=" \t>]+)([ \t]*)(=?)/g,
-      ['sh_type', 'sh_normal', 'sh_symbol'],
+      [SHJS.SYNTAX_PREFIX + 'type', SHJS.SYNTAX_PREFIX + 'normal', SHJS.SYNTAX_PREFIX + 'symbol'],
       -1
     ],
     [
       /"/g,
-      'sh_string',
+      SHJS.SYNTAX_PREFIX + 'string',
       2
     ]
   ]

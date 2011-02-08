@@ -1,7 +1,7 @@
 var ExtSHJS = ExtSHJS || { } ;
 
 SHJS.SYNTAX_PREFIX = 'extshjs_' ;
-ExtSHJS.SYNTAX_PREFIX = 'extshjs';
+ExtSHJS.SYNTAX_PREFIX = 'extshjs_';
 
 SHJS.ClassicBehavior = false ;
 SHJS.ExtendedBehavior = false ;
@@ -33,7 +33,7 @@ ExtSHJS.getSyntaxElementsFrom = function ( paramDocumentFragment )
     {
         if ( ( childNodeList[ii].nodeType == 1 ) && ( childNodeList[ii].className ) )
         {
-            nodeLanguage = childNodeList[ii].className.substring( 3 ) ;
+            nodeLanguage = childNodeList[ii].className.substring( ExtSHJS.SYNTAX_PREFIX.length ) ;
 
             if ( nodeLanguage in SHJS.languages )
             {
@@ -71,7 +71,7 @@ ExtSHJS.highlightElement = function ( element , language , isExtendedBehavior )
 {
     isExtendedBehavior = ( isExtendedBehavior == null ) || isExtendedBehavior ;
 
-    SHJS.addClass(element, 'sh_sourceCode') ;
+    SHJS.addClass(element, ExtSHJS.SYNTAX_PREFIX + 'sourceCode') ;
 
     var highlightedDocumentFragment = ExtSHJS.getHighlightedDocumentFragment( element , language , isExtendedBehavior ) ;
     var subElements = ExtSHJS.getSyntaxElementsFrom( highlightedDocumentFragment ) ;
@@ -97,7 +97,7 @@ ExtSHJS.syntaxSheet = function ( paramPreElement )
     var trSyntax ;
     var preSyntax = document.createElement( 'pre' ) ;
     var tblSyntaxSheet = document.createElement( 'table' ) ;
-    SHJS.addClass( tblSyntaxSheet , 'extshjs_sourceCode' ) ;
+    SHJS.addClass( tblSyntaxSheet , ExtSHJS.SYNTAX_PREFIX + 'sourceCode' ) ;
     var isAlternate = false ;
     var lineCount = 0 ;
 
@@ -112,21 +112,21 @@ ExtSHJS.syntaxSheet = function ( paramPreElement )
 
             //Apply style to the current pre element
             preSyntax.className = paramPreElement.className ;
-            ( isAlternate ) && SHJS.addClass( preSyntax , 'extshjs_alternateLine' ) ;
+            ( isAlternate ) && SHJS.addClass( preSyntax , ExtSHJS.SYNTAX_PREFIX + 'alternateLine' ) ;
 
             //Create a new line number cell, syntax cell, a new row.
             tdLineNumber = document.createElement( 'td' ) ;
-            SHJS.addClass( tdLineNumber , 'extshjs_lineNumber' ) ;
+            SHJS.addClass( tdLineNumber , ExtSHJS.SYNTAX_PREFIX + 'lineNumber' ) ;
             tdLineNumber.innerHTML = lineCount + '' ;
 
             //Add pre to the cell
             tdSyntax = document.createElement( 'td' ) ;
-            SHJS.addClass( tdSyntax , 'extshjs_sourceCode' ) ;
+            SHJS.addClass( tdSyntax , ExtSHJS.SYNTAX_PREFIX + 'sourceCode' ) ;
             tdSyntax.appendChild( preSyntax ) ;
 
             //Add line number and syntax cellsto the row
             trSyntax = document.createElement( 'tr' ) ;
-            ( isAlternate ) && SHJS.addClass( trSyntax , 'extshjs_alternateLine' ) ;
+            ( isAlternate ) && SHJS.addClass( trSyntax , ExtSHJS.SYNTAX_PREFIX + 'alternateLine' ) ;
             trSyntax.appendChild( tdLineNumber ) ;
             trSyntax.appendChild( tdSyntax ) ;
 
@@ -151,18 +151,18 @@ ExtSHJS.syntaxSheet = function ( paramPreElement )
 
         //Apply style to the current pre element
         preSyntax.className = paramPreElement.className ;
-        ( isAlternate ) && SHJS.addClass( preSyntax , 'extshjs_alternateLine' ) ;
+        ( isAlternate ) && SHJS.addClass( preSyntax , ExtSHJS.SYNTAX_PREFIX + 'alternateLine' ) ;
 
         //Create a new line number cell, syntax cell, a new row.
         tdLineNumber = document.createElement( 'td' ) ;
-        SHJS.addClass( tdLineNumber , 'extshjs_lineNumber' ) ;
-        ( isAlternate ) && SHJS.addClass( tdLineNumber , 'extshjs_alternateLineNumber' ) ;
+        SHJS.addClass( tdLineNumber , ExtSHJS.SYNTAX_PREFIX + 'lineNumber' ) ;
+        ( isAlternate ) && SHJS.addClass( tdLineNumber , ExtSHJS.SYNTAX_PREFIX + 'alternateLineNumber' ) ;
         tdLineNumber.innerHTML = lineCount + '' ;
 
         //Add pre to the cell
         tdSyntax = document.createElement( 'td' ) ;
-        SHJS.addClass( tdSyntax , 'extshjs_sourceCode' ) ;
-        ( isAlternate ) && SHJS.addClass( tdSyntax , 'extshjs_alternateLine' ) ;
+        SHJS.addClass( tdSyntax , ExtSHJS.SYNTAX_PREFIX + 'sourceCode' ) ;
+        ( isAlternate ) && SHJS.addClass( tdSyntax , ExtSHJS.SYNTAX_PREFIX + 'alternateLine' ) ;
         tdSyntax.appendChild( preSyntax ) ;
 
         //Add line number and syntax cellsto the row
@@ -195,9 +195,9 @@ ExtSHJS.highlightDocument = function ( isExtendedBehavior )
     for ( currentElement in preElements )
     {
         currentCssClass = preElements[currentElement].className + '' ;
-        if ( currentCssClass.substr( 0 , 3 ) == 'sh_' )
+        if ( currentCssClass.substr( 0 , ExtSHJS.SYNTAX_PREFIX.length ) == ExtSHJS.SYNTAX_PREFIX )
         {
-            currentLanguage = currentCssClass.substring( 3 ) ;
+            currentLanguage = currentCssClass.substring(  ExtSHJS.SYNTAX_PREFIX.length ) ;
             ExtSHJS.highlightElement( preElements[currentElement] , SHJS.languages[currentLanguage] , isExtendedBehavior ) ;
             //SHJS.highlightElement( preElements[currentElement] , SHJS.languages[currentLanguage] ) ;
             ExtSHJS.syntaxSheet( preElements[currentElement] ) ;
